@@ -20,7 +20,14 @@
 
   programs.nushell.enable = true;
 
-  programs.plasma.enable = true;
+  programs.plasma = {
+    enable = true;
+    workspace.lookAndFeel = "org.kde.breezedark.desktop";
+    configFile.kxkbrc.Layout = {
+      Options = "ctrl:nocaps";
+      ResetOldOptions = true;
+    };
+  };
 
   xdg.configFile."fcitx5/profile".text = ''
     [Groups/0]

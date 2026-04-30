@@ -20,6 +20,8 @@
 
   programs.nushell.enable = true;
 
+  programs.gh.enable = true;
+
   programs.plasma = {
     enable = true;
     workspace.lookAndFeel = "org.kde.breezedark.desktop";

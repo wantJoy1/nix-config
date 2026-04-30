@@ -17,6 +17,11 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # The DSI-1 panel is mounted with its right side physically up.
+  # i915 ignores panel_orientation= for this DSI panel, so rotate the
+  # framebuffer console directly (90° clockwise).
+  boot.kernelParams = [ "fbcon=rotate:1" ];
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

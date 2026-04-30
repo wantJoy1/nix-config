@@ -24,7 +24,10 @@
     shellAliases.rebuild = "sudo nixos-rebuild switch --flake /home/kf/Documents/nixos-config#MinibookXN100";
   };
 
-  programs.gh.enable = true;
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "https";
+  };
 
   programs.plasma = {
     enable = true;

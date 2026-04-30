@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     obsidian
     claude-code
+    kdePackages.kate
   ];
 
   programs.git = {

@@ -18,7 +18,10 @@
     };
   };
 
-  programs.nushell.enable = true;
+  programs.nushell = {
+    enable = true;
+    shellAliases.rebuild = "sudo nixos-rebuild switch --flake /home/kf/Documents/nixos-config#MinibookXN100";
+  };
 
   programs.gh.enable = true;
 

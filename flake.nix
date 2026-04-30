@@ -15,7 +15,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, plasma-manager, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix

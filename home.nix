@@ -11,7 +11,10 @@
     kdePackages.kate
   ];
 
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    configPath = ".config/mozilla/firefox";
+  };
 
   programs.git = {
     enable = true;

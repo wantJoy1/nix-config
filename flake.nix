@@ -18,7 +18,7 @@
     nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./hosts/MinibookXN100/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

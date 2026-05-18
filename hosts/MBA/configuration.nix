@@ -21,6 +21,7 @@
     casks = [
       "firefox"
       "claude"
+      "ghostty"
     ];
   };
 

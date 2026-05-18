@@ -1,4 +1,4 @@
-{ userName, ... }:
+{ pkgs, userName, ... }:
 
 {
   imports = [ ./common.nix ];
@@ -10,8 +10,12 @@
   programs.ghostty = {
     enable = true;
     package = null;
+    settings = {
+      command = "${pkgs.nushell}/bin/nu";
+      "auto-update" = "download";
+    };
   };
 
   programs.nushell.shellAliases.rebuild =
-    "sudo darwin-rebuild switch --flake ~/Documents/nix-config#MBA";
+    "sudo /run/current-system/sw/bin/darwin-rebuild switch --flake /Users/${userName}/Documents/nix-config#MBA";
 }

@@ -1,6 +1,8 @@
 { pkgs, userName, ... }:
 
 {
+  imports = [ ./common.nix ];
+
   home.username = userName;
   home.homeDirectory = "/home/${userName}";
   home.stateVersion = "25.11";
@@ -16,24 +18,11 @@
     configPath = ".config/mozilla/firefox";
   };
 
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "wantJoy1";
-      email = "wantjoy1@gmail.com";
-    };
-  };
-
   programs.nushell = {
     enable = true;
     shellAliases.rebuild = "sudo nixos-rebuild switch --flake ~/Documents/nix-config#MinibookXN100";
     environmentVariables.EDITOR = "kate";
     extraConfig = "$env.config.show_banner = false";
-  };
-
-  programs.gh = {
-    enable = true;
-    settings.git_protocol = "https";
   };
 
   programs.plasma = {

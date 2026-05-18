@@ -36,7 +36,7 @@
             home-manager.sharedModules = [
               plasma-manager.homeModules.plasma-manager
             ];
-            home-manager.users.${userName} = import ./home.nix;
+            home-manager.users.${userName} = import ./home/nixos.nix;
           }
         ];
       };
@@ -46,6 +46,14 @@
         modules = [
           ./hosts/MBA/configuration.nix
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit userName; };
+            home-manager.users.${userName} = import ./home/darwin.nix;
+          }
         ];
       };
     };

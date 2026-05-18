@@ -47,17 +47,11 @@ nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configu
 
 ### 1. Nix をインストール
 
-```sh
-sh <(curl -L https://nixos.org/nix/install) --daemon
-```
-
-完了後、新しいシェルを開く。
+公式インストーラを使う: <https://nixos.org/download/>（macOS は multi-user / daemon モード）。完了後、新しいシェルを開く。
 
 ### 2. Homebrew をインストール
 
-```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+公式インストーラを使う: <https://brew.sh/>
 
 Apple Silicon の場合 `/opt/homebrew/bin/brew` に入る。`.zprofile` 設定はスキップ（nix-darwin は brew をフルパスで呼ぶし、Nushell ユーザーなので zsh 設定は不要）。
 

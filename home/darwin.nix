@@ -1,9 +1,9 @@
-{ pkgs, userName, ... }:
+{ config, pkgs, osConfig, userName, ... }:
 
 {
   imports = [ ./common.nix ];
 
-  home.homeDirectory = "/Users/${userName}";
+  home.homeDirectory = osConfig.users.users.${userName}.home;
 
   # ghostty itself is installed via Homebrew cask (nixpkgs has no darwin
   # build); the home-manager module still owns the declarative config.
@@ -17,5 +17,5 @@
   };
 
   programs.nushell.shellAliases.rebuild =
-    "sudo /run/current-system/sw/bin/darwin-rebuild switch --flake /Users/${userName}/Documents/nix-config#MBA";
+    "sudo /run/current-system/sw/bin/darwin-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#MBA";
 }

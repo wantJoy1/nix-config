@@ -1,9 +1,9 @@
-{ pkgs, userName, ... }:
+{ config, pkgs, osConfig, userName, ... }:
 
 {
   imports = [ ./common.nix ];
 
-  home.homeDirectory = "/home/${userName}";
+  home.homeDirectory = osConfig.users.users.${userName}.home;
 
   home.packages = with pkgs; [
     obsidian
@@ -18,7 +18,7 @@
 
   programs.nushell = {
     shellAliases.rebuild =
-      "sudo nixos-rebuild switch --flake ~/Documents/nix-config#MinibookXN100";
+      "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#MinibookXN100";
     environmentVariables.EDITOR = "kate";
   };
 

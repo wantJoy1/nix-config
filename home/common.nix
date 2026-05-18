@@ -1,4 +1,4 @@
-{ userName, ... }:
+{ config, lib, osConfig, userName, ... }:
 
 {
   home.username = userName;
@@ -20,5 +20,12 @@
   programs.nushell = {
     enable = true;
     extraConfig = "$env.config.show_banner = false";
+    # systemPath is nix-darwin-only; NixOS exports PATH via the session.
+    extraEnv = lib.optionalString (osConfig.environment ? systemPath) ''
+      $env.PATH = ("${builtins.replaceStrings
+        [ "$USER" "$HOME" ]
+        [ config.home.username config.home.homeDirectory ]
+        osConfig.environment.systemPath}" | split row (char esep))
+    '';
   };
 }

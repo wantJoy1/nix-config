@@ -51,10 +51,13 @@
       autoUpdate = false;
       upgrade = false;
     };
+    taps = [ "lutzifer/homebrew-tap" ];
+    brews = [ "keyboardSwitcher" ];
     casks = [
       "firefox"
       "claude"
       "ghostty"
+      "macskk"
     ];
   };
 

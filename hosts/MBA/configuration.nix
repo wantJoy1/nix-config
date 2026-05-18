@@ -22,6 +22,7 @@
       NSAutomaticQuoteSubstitutionEnabled = false;
     };
     finder.AppleShowAllExtensions = true;
+    trackpad.Clicking = true;
     dock = {
       autohide = true;
       autohide-delay = 0.0;

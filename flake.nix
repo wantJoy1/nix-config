@@ -1,5 +1,5 @@
 {
-  description = "NixOS system configuration";
+  description = "Personal Nix configurations for NixOS and macOS";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -12,9 +12,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, plasma-manager, nix-darwin, ... }@inputs: {
     nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -29,6 +33,13 @@
           ];
           home-manager.users.kf = import ./home.nix;
         }
+      ];
+    };
+
+    darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
+      modules = [
+        ./hosts/MBA/configuration.nix
+        { nixpkgs.hostPlatform = "aarch64-darwin"; }
       ];
     };
   };

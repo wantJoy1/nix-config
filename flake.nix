@@ -21,39 +21,44 @@
   outputs = { self, nixpkgs, home-manager, plasma-manager, nix-darwin, ... }@inputs:
     let
       userName = "wantjoy";
+      specialArgs = { inherit userName; };
+      systemDefaults = {
+        nixpkgs.config.allowUnfree = true;
+        nix.settings.experimental-features = [ "nix-command" "flakes" ];
+      };
+      homeManagerDefaults = {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          backupFileExtension = "backup";
+          extraSpecialArgs = specialArgs;
+        };
+      };
     in {
       nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit userName; };
+        inherit specialArgs;
         modules = [
+          systemDefaults
           ./hosts/MinibookXN100/configuration.nix
           home-manager.nixosModules.home-manager
+          homeManagerDefaults
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit userName; };
-            home-manager.sharedModules = [
-              plasma-manager.homeModules.plasma-manager
-            ];
+            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName} = import ./home/nixos.nix;
           }
         ];
       };
 
       darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit userName; };
+        inherit specialArgs;
         modules = [
+          systemDefaults
           ./hosts/MBA/configuration.nix
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
           home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit userName; };
-            home-manager.users.${userName} = import ./home/darwin.nix;
-          }
+          homeManagerDefaults
+          { home-manager.users.${userName} = import ./home/darwin.nix; }
         ];
       };
     };

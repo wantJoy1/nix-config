@@ -7,7 +7,10 @@ NixOS と macOS（nix-darwin）の個人設定を 1 つの flake で管理。
 ```
 flake.nix                                   # 両 OS 共通入口
 flake.lock
-home.nix                                    # NixOS 用 home-manager 設定（kf）
+home/
+  common.nix                                # 両 OS 共通の home-manager 設定
+  darwin.nix                                # macOS 固有の home-manager 設定
+  nixos.nix                                 # NixOS 固有の home-manager 設定
 hosts/
   MinibookXN100/                            # NixOS, x86_64-linux
     configuration.nix
@@ -20,7 +23,7 @@ Mac 側の GUI アプリ（Firefox, Claude Desktop）は `homebrew.casks` で宣
 
 ## Bootstrap (NixOS)
 
-private repo なので `gh` 経由で取得する。クローン先パスは固定 (`home.nix` の rebuild alias が参照)。
+private repo なので `gh` 経由で取得する。クローン先パスは固定 (`home/{darwin,nixos}.nix` の rebuild alias が参照)。
 
 ```sh
 nix-shell -p gh

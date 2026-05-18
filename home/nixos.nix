@@ -3,9 +3,7 @@
 {
   imports = [ ./common.nix ];
 
-  home.username = userName;
   home.homeDirectory = "/home/${userName}";
-  home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
     obsidian
@@ -19,10 +17,9 @@
   };
 
   programs.nushell = {
-    enable = true;
-    shellAliases.rebuild = "sudo nixos-rebuild switch --flake ~/Documents/nix-config#MinibookXN100";
+    shellAliases.rebuild =
+      "sudo nixos-rebuild switch --flake ~/Documents/nix-config#MinibookXN100";
     environmentVariables.EDITOR = "kate";
-    extraConfig = "$env.config.show_banner = false";
   };
 
   programs.plasma = {

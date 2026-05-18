@@ -18,29 +18,35 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, nix-darwin, ... }@inputs: {
-    nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/MinibookXN100/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "backup";
-          home-manager.sharedModules = [
-            plasma-manager.homeModules.plasma-manager
-          ];
-          home-manager.users.kf = import ./home.nix;
-        }
-      ];
-    };
+  outputs = { self, nixpkgs, home-manager, plasma-manager, nix-darwin, ... }@inputs:
+    let
+      userName = "wantjoy";
+    in {
+      nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit userName; };
+        modules = [
+          ./hosts/MinibookXN100/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit userName; };
+            home-manager.sharedModules = [
+              plasma-manager.homeModules.plasma-manager
+            ];
+            home-manager.users.${userName} = import ./home.nix;
+          }
+        ];
+      };
 
-    darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
-      modules = [
-        ./hosts/MBA/configuration.nix
-        { nixpkgs.hostPlatform = "aarch64-darwin"; }
-      ];
+      darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit userName; };
+        modules = [
+          ./hosts/MBA/configuration.nix
+          { nixpkgs.hostPlatform = "aarch64-darwin"; }
+        ];
+      };
     };
-  };
 }

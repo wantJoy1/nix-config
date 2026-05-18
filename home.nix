@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, userName, ... }:
 
 {
-  home.username = "kf";
-  home.homeDirectory = "/home/kf";
+  home.username = userName;
+  home.homeDirectory = "/home/${userName}";
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
@@ -26,7 +26,7 @@
 
   programs.nushell = {
     enable = true;
-    shellAliases.rebuild = "sudo nixos-rebuild switch --flake /home/kf/Documents/nix-config#MinibookXN100";
+    shellAliases.rebuild = "sudo nixos-rebuild switch --flake ~/Documents/nix-config#MinibookXN100";
     environmentVariables.EDITOR = "kate";
     extraConfig = "$env.config.show_banner = false";
   };

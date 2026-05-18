@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, userName, ... }:
 {
   system.stateVersion = 6;
-  system.primaryUser = "wantjoy";
+  system.primaryUser = userName;
 
   nixpkgs.config.allowUnfree = true;
 

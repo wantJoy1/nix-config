@@ -29,6 +29,10 @@
       Options = "ctrl:nocaps";
       ResetOldOptions = true;
     };
+    configFile.kwinrc.Wayland.InputMethod = {
+      value = "/run/current-system/sw/share/applications/fcitx5-wayland-launcher.desktop";
+      immutable = true;
+    };
   };
 
   xdg.configFile."fcitx5/profile".text = ''

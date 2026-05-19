@@ -26,7 +26,7 @@ Mac 側の GUI アプリ（Firefox, Claude Desktop）は `homebrew.casks` で宣
 private repo なので `gh` 経由で取得する。クローン先パスは固定 (`home/{darwin,nixos}.nix` の rebuild alias が参照)。
 
 ```sh
-nix-shell -p gh
+nix-shell -p gh git
 gh auth login
 gh repo clone wantJoy1/nix-config ~/Documents/nix-config
 ```

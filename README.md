@@ -33,7 +33,7 @@ gh repo clone wantJoy1/nix-config ~/Documents/nix-config
 
 ### 再インストール時
 
-ディスク UUID やカーネルモジュール構成が変わるため、hardware-configuration を作り直す。
+インストーラー生成の `/etc/nixos/hardware-configuration.nix` には USB ブート前提のモジュール (`usb_storage`, `sd_mod` 等) が混ざるので、実機で `nixos-generate-config` を回した出力で差し替える。
 
 ```sh
 nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix

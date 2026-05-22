@@ -50,6 +50,21 @@
         ];
       };
 
+      nixosConfigurations.HX100G = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          systemDefaults
+          ./hosts/HX100G/configuration.nix
+          home-manager.nixosModules.home-manager
+          homeManagerDefaults
+          {
+            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+            home-manager.users.${userName} = import ./home/nixos.nix;
+          }
+        ];
+      };
+
       darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
         inherit specialArgs;
         modules = [

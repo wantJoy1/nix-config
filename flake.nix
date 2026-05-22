@@ -56,6 +56,7 @@
         inherit specialArgs;
         modules = [
           systemDefaults
+          ./modules/nixos/common.nix
           ./hosts/HX100G/configuration.nix
           home-manager.nixosModules.home-manager
           homeManagerDefaults

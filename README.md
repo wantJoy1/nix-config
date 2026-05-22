@@ -4,34 +4,18 @@ NixOS と macOS（nix-darwin）の個人設定を 1 つの flake で管理。
 
 ## 構成
 
-```
-flake.nix                                   # 両 OS 共通入口
-flake.lock
-home/
-  common.nix                                # 両 OS 共通の home-manager 設定
-  darwin.nix                                # macOS 固有の home-manager 設定
-  nixos.nix                                 # NixOS 固有の home-manager 設定
-modules/
-  nixos/
-    common.nix                              # NixOS ホスト共通の system 設定
-hosts/
-  MinibookXN100/                            # NixOS, x86_64-linux
-    configuration.nix
-    hardware-configuration.nix
-  HX100G/                                   # NixOS, x86_64-linux
-    configuration.nix
-    hardware-configuration.nix
-  MBA/                                      # nix-darwin, aarch64-darwin
-    configuration.nix
-```
+2 軸 layer モデル：
 
-`hosts/<NAME>/configuration.nix` にはそのホスト固有の設定（`hostName`, `system.stateVersion`, 必要なら `boot.kernelParams` 等）だけを書く。共通設定は `modules/nixos/common.nix` 側で flake から自動的に適用される。
+- **scope**（合成順、後ほど具体・前を上書き）：`base/` → `nixos/`・`darwin/` → `hosts/<NAME>/`
+- **concern**：`system.nix`（NixOS / nix-darwin module）／ `home.nix`（home-manager module）
 
-Mac 側の GUI アプリ（Firefox, Claude Desktop）は `homebrew.casks` で宣言。Homebrew そのものは事前インストールが必要（nix-darwin はパッケージ管理のみ）。
+合成は `flake.nix` の各ホストブロックで宣言。各 layer dir は必要な concern のファイルだけ持つ。
+
+Mac 側 GUI アプリは `homebrew.casks` で宣言。Homebrew 自体は事前インストールが必要（nix-darwin はパッケージ管理のみ）。
 
 ## Bootstrap (NixOS)
 
-private repo なので `gh` 経由で取得する。クローン先パスは固定 (`home/{darwin,nixos}.nix` の rebuild alias が参照)。
+private repo なので `gh` 経由で取得する。クローン先パスは `~/Documents/nix-config` 固定（rebuild alias がハードコード）。
 
 ```sh
 nix-shell -p gh git
@@ -44,25 +28,25 @@ gh repo clone wantJoy1/nix-config ~/Documents/nix-config
 インストーラー生成の `/etc/nixos/hardware-configuration.nix` には USB ブート前提のモジュール (`usb_storage`, `sd_mod` 等) が混ざるので、実機で `nixos-generate-config` を回した出力で差し替える。
 
 ```sh
-nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
+nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware.nix
 ```
 
 ### 新規ホストを追加
 
 NixOS を最小構成でインストール・ユーザー作成済み、上記 Bootstrap で clone 済みの状態から：
 
-1. ホスト用ディレクトリを作り、hardware-configuration を生成する：
+1. hardware.nix を生成：
 
    ```sh
    mkdir hosts/<NAME>
-   nixos-generate-config --show-hardware-config > hosts/<NAME>/hardware-configuration.nix
+   nixos-generate-config --show-hardware-config > hosts/<NAME>/hardware.nix
    ```
 
-2. `hosts/<NAME>/configuration.nix` を作成。ホスト固有のもの（`networking.hostName`, `system.stateVersion`, 必要なら `boot.kernelParams` 等）だけを書く。既存ホストの configuration.nix をコピーして調整するのが早い。
+2. `hosts/<NAME>/system.nix` を作成（既存ホストをコピーして `hostName` と `stateVersion` を調整）。
 
-3. `flake.nix` に `nixosConfigurations.<NAME>` エントリを追加（既存の NixOS ホスト定義をコピーして `./hosts/<NAME>/configuration.nix` に差し替える）。
+3. `flake.nix` に `nixosConfigurations.<NAME>` エントリを追加（同じく既存ホストのブロックをコピー）。
 
-4. flake は git-tracked なファイルしか見ないので、新規ファイルを必ず `git add` する：
+4. 新規ファイルを `git add` する（flake は git-tracked なファイルしか見ない）：
 
    ```sh
    git add hosts/<NAME>/ flake.nix

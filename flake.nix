@@ -37,7 +37,7 @@
         modules = [
           ./base/system.nix
           ./nixos/system.nix
-          ./hosts/MinibookXN100/configuration.nix
+          ./hosts/MinibookXN100/system.nix
           home-manager.nixosModules.home-manager
           homeManagerDefaults
           {
@@ -56,7 +56,7 @@
         modules = [
           ./base/system.nix
           ./nixos/system.nix
-          ./hosts/HX100G/configuration.nix
+          ./hosts/HX100G/system.nix
           home-manager.nixosModules.home-manager
           homeManagerDefaults
           {
@@ -73,7 +73,7 @@
         inherit specialArgs;
         modules = [
           ./base/system.nix
-          ./hosts/MBA/configuration.nix
+          ./hosts/MBA/system.nix
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
           home-manager.darwinModules.home-manager
           homeManagerDefaults

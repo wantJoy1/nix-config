@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware.nix ];
 
   networking.hostName = "HX100G";
 

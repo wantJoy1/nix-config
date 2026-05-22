@@ -1,8 +1,6 @@
 { config, pkgs, osConfig, userName, ... }:
 
 {
-  imports = [ ./common.nix ];
-
   home.homeDirectory = osConfig.users.users.${userName}.home;
 
   # ghostty itself is installed via Homebrew cask (nixpkgs has no darwin

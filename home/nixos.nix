@@ -1,8 +1,6 @@
 { config, pkgs, osConfig, userName, ... }:
 
 {
-  imports = [ ./common.nix ];
-
   home.homeDirectory = osConfig.users.users.${userName}.home;
 
   home.packages = with pkgs; [

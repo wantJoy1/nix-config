@@ -46,7 +46,10 @@
           homeManagerDefaults
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-            home-manager.users.${userName} = import ./home/nixos.nix;
+            home-manager.users.${userName}.imports = [
+              ./home/common.nix
+              ./home/nixos.nix
+            ];
           }
         ];
       };
@@ -62,7 +65,10 @@
           homeManagerDefaults
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-            home-manager.users.${userName} = import ./home/nixos.nix;
+            home-manager.users.${userName}.imports = [
+              ./home/common.nix
+              ./home/nixos.nix
+            ];
           }
         ];
       };
@@ -75,7 +81,12 @@
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
           home-manager.darwinModules.home-manager
           homeManagerDefaults
-          { home-manager.users.${userName} = import ./home/darwin.nix; }
+          {
+            home-manager.users.${userName}.imports = [
+              ./home/common.nix
+              ./home/darwin.nix
+            ];
+          }
         ];
       };
     };

@@ -18,8 +18,4 @@
   # Suspend/resume is broken on this machine; disable powerdevil's idle
   # auto-suspend until the wake bug is investigated.
   programs.plasma.powerdevil.AC.autoSuspend.action = "nothing";
-
-  # TEMPORARY: shortened to reproduce the display-off wake bug quickly.
-  # Revert (remove this line) once the root cause is identified.
-  programs.plasma.powerdevil.AC.turnOffDisplay.idleTimeout = 120;
 }

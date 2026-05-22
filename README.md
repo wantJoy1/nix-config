@@ -11,13 +11,21 @@ home/
   common.nix                                # 両 OS 共通の home-manager 設定
   darwin.nix                                # macOS 固有の home-manager 設定
   nixos.nix                                 # NixOS 固有の home-manager 設定
+modules/
+  nixos/
+    common.nix                              # NixOS ホスト共通の system 設定
 hosts/
   MinibookXN100/                            # NixOS, x86_64-linux
+    configuration.nix
+    hardware-configuration.nix
+  HX100G/                                   # NixOS, x86_64-linux
     configuration.nix
     hardware-configuration.nix
   MBA/                                      # nix-darwin, aarch64-darwin
     configuration.nix
 ```
+
+`hosts/<NAME>/configuration.nix` にはそのホスト固有の設定（`hostName`, `system.stateVersion`, 必要なら `boot.kernelParams` 等）だけを書く。共通設定は `modules/nixos/common.nix` 側で flake から自動的に適用される。
 
 Mac 側の GUI アプリ（Firefox, Claude Desktop）は `homebrew.casks` で宣言。Homebrew そのものは事前インストールが必要（nix-darwin はパッケージ管理のみ）。
 
@@ -38,6 +46,33 @@ gh repo clone wantJoy1/nix-config ~/Documents/nix-config
 ```sh
 nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware-configuration.nix
 ```
+
+### 新規ホストを追加
+
+NixOS を最小構成でインストール・ユーザー作成済み、上記 Bootstrap で clone 済みの状態から：
+
+1. ホスト用ディレクトリを作り、hardware-configuration を生成する：
+
+   ```sh
+   mkdir hosts/<NAME>
+   nixos-generate-config --show-hardware-config > hosts/<NAME>/hardware-configuration.nix
+   ```
+
+2. `hosts/<NAME>/configuration.nix` を作成。ホスト固有のもの（`networking.hostName`, `system.stateVersion`, 必要なら `boot.kernelParams` 等）だけを書く。既存ホストの configuration.nix をコピーして調整するのが早い。
+
+3. `flake.nix` に `nixosConfigurations.<NAME>` エントリを追加（既存の NixOS ホスト定義をコピーして `./hosts/<NAME>/configuration.nix` に差し替える）。
+
+4. flake は git-tracked なファイルしか見ないので、新規ファイルを必ず `git add` する：
+
+   ```sh
+   git add hosts/<NAME>/ flake.nix
+   ```
+
+5. 適用：
+
+   ```sh
+   sudo nixos-rebuild switch --flake .#<NAME>
+   ```
 
 ## Bootstrap (macOS, nix-darwin)
 

@@ -139,8 +139,8 @@ ls /Applications/Firefox.app /Applications/Claude.app
 macOS の入力ソース（`com.apple.HIToolbox` の `AppleEnabledInputSources`）は `nix-darwin` で宣言しても TIS 整合チェックで巻き戻されるため、TIS API を直接叩く `keyboardSwitcher` (Homebrew tap で導入済み) 経由で設定する。
 
 ```sh
-nu ./hosts/MBA/configure-input-sources.nu       # Dvorak + macSKK ひらがな を有効化、ABC 削除、macSKK 内部配列も Dvorak
-nu ./hosts/MBA/install-macskk-dictionaries.nu   # SKK 辞書を macSKK の辞書ディレクトリに配置
+nu ./hosts/MBA/scripts/configure-input-sources.nu       # Dvorak + macSKK ひらがな を有効化、ABC 削除、macSKK 内部配列も Dvorak
+nu ./hosts/MBA/scripts/install-macskk-dictionaries.nu   # SKK 辞書を macSKK の辞書ディレクトリに配置
 ```
 
 辞書配置後は macSKK 設定画面の「辞書」で有効化する（macSKK 自体に辞書ダウンロード機能はない）。

@@ -42,6 +42,11 @@
     pulse.enable = true;
   };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   users.users.${userName} = {
     isNormalUser = true;
     description = userName;

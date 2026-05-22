@@ -15,7 +15,13 @@
     0=デフォルト
   '';
 
-  # Suspend/resume is broken on this machine; disable powerdevil's idle
-  # auto-suspend until the wake bug is investigated.
+  # s2idle is broken on this machine: amdgpu's SMU IP block fails to
+  # resume (`resume of IP block <smu> failed -62`), the GPU wedges, and
+  # even ssh-initiated reboot fails afterwards. BIOS 0.18 (2023-09-25)
+  # is the final firmware MinisForum publishes for HX100G — the SMU
+  # firmware is bundled with it — and `amdgpu.dcdebugmask=0x10` was
+  # tried as a kernel-side workaround and made no difference. Keep
+  # auto-suspend off and do not manually suspend either. Display-off
+  # (DPMS) works fine; don't conflate it with this bug.
   programs.plasma.powerdevil.AC.autoSuspend.action = "nothing";
 }

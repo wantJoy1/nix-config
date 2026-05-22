@@ -22,10 +22,6 @@
     let
       userName = "wantjoy";
       specialArgs = { inherit userName; };
-      systemDefaults = {
-        nixpkgs.config.allowUnfree = true;
-        nix.settings.experimental-features = [ "nix-command" "flakes" ];
-      };
       homeManagerDefaults = {
         home-manager = {
           useGlobalPkgs = true;
@@ -39,16 +35,16 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          systemDefaults
-          ./modules/nixos/common.nix
+          ./base/system.nix
+          ./nixos/system.nix
           ./hosts/MinibookXN100/configuration.nix
           home-manager.nixosModules.home-manager
           homeManagerDefaults
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName}.imports = [
-              ./home/common.nix
-              ./home/nixos.nix
+              ./base/home.nix
+              ./nixos/home.nix
             ];
           }
         ];
@@ -58,16 +54,16 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          systemDefaults
-          ./modules/nixos/common.nix
+          ./base/system.nix
+          ./nixos/system.nix
           ./hosts/HX100G/configuration.nix
           home-manager.nixosModules.home-manager
           homeManagerDefaults
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName}.imports = [
-              ./home/common.nix
-              ./home/nixos.nix
+              ./base/home.nix
+              ./nixos/home.nix
             ];
           }
         ];
@@ -76,15 +72,15 @@
       darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
         inherit specialArgs;
         modules = [
-          systemDefaults
+          ./base/system.nix
           ./hosts/MBA/configuration.nix
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
           home-manager.darwinModules.home-manager
           homeManagerDefaults
           {
             home-manager.users.${userName}.imports = [
-              ./home/common.nix
-              ./home/darwin.nix
+              ./base/home.nix
+              ./darwin/home.nix
             ];
           }
         ];

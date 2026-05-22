@@ -40,6 +40,7 @@
         inherit specialArgs;
         modules = [
           systemDefaults
+          ./modules/nixos/common.nix
           ./hosts/MinibookXN100/configuration.nix
           home-manager.nixosModules.home-manager
           homeManagerDefaults

@@ -45,6 +45,7 @@
             home-manager.users.${userName}.imports = [
               ./base/home.nix
               ./nixos/home.nix
+              ./hosts/MinibookXN100/home.nix
             ];
           }
         ];
@@ -64,6 +65,7 @@
             home-manager.users.${userName}.imports = [
               ./base/home.nix
               ./nixos/home.nix
+              ./hosts/HX100G/home.nix
             ];
           }
         ];

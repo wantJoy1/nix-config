@@ -16,7 +16,7 @@
 
   programs.nushell = {
     shellAliases.rebuild =
-      "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#MinibookXN100";
+      "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
     environmentVariables.EDITOR = "kate";
   };
 

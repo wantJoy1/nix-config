@@ -3,10 +3,10 @@
 {
   imports = [ ./hardware.nix ];
 
-  # The DSI-1 panel is mounted with its right side physically up.
-  # i915 ignores panel_orientation= for this DSI panel, so rotate the
-  # framebuffer console directly (90° clockwise).
-  boot.kernelParams = [ "fbcon=rotate:1" ];
+  boot.kernelPatches = [{
+    name = "chuwi-minibook-x-panel-orientation";
+    patch = ./kernel-patches/chuwi-minibook-x-panel-orientation.patch;
+  }];
 
   networking.hostName = "MinibookXN100";
 

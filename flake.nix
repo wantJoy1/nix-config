@@ -71,6 +71,26 @@
         ];
       };
 
+      nixosConfigurations.GPDP3 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          ./base/system.nix
+          ./nixos/system.nix
+          ./hosts/GPDP3/system.nix
+          home-manager.nixosModules.home-manager
+          homeManagerDefaults
+          {
+            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+            home-manager.users.${userName}.imports = [
+              ./base/home.nix
+              ./nixos/home.nix
+              ./hosts/GPDP3/home.nix
+            ];
+          }
+        ];
+      };
+
       darwinConfigurations.MBA = nix-darwin.lib.darwinSystem {
         inherit specialArgs;
         modules = [

@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     obsidian
     claude-code
+    opencode
     kdePackages.kate
   ];
 

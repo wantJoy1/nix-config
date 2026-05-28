@@ -4,6 +4,7 @@
   home.homeDirectory = osConfig.users.users.${userName}.home;
 
   home.packages = with pkgs; [
+    # TODO: 一部はクロスプラットフォームかもしれず base/home.nix へ移せる可能性あり。要整理。
     obsidian
     claude-code
     opencode

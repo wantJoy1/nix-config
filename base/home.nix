@@ -1,8 +1,24 @@
-{ config, lib, osConfig, userName, ... }:
+{ config, lib, pkgs, osConfig, userName, ... }:
 
 {
   home.username = userName;
   home.stateVersion = "25.11";
+
+  home.packages = with pkgs; [
+    fzf
+    ripgrep
+    fd
+    bat
+    eza
+    lazygit
+    msedit
+  ];
+
+  # Nushell-integrated tools (primary shell on all hosts); the home-manager
+  # modules wire their Nushell init automatically.
+  programs.carapace.enable = true;
+  programs.atuin.enable = true;
+  programs.zoxide.enable = true;
 
   programs.git = {
     enable = true;

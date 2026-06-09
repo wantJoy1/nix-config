@@ -8,6 +8,7 @@
   },
   "extractor": {
     "base-directory": "~/Downloads/gallery-dl",
+    "archive": "~/Downloads/gallery-dl/archive.txt",
     "cookies-from-browser": "firefox",
     "twitter": {
       "directory": ["twitter", "{user[name]}"],

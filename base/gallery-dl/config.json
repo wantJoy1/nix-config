@@ -1,0 +1,35 @@
+{
+  "downloader": {
+    "rate": "500k",
+    "sleep": [3.0, 6.0],
+    "sleep-request": [1.0, 3.0],
+    "sleep-extractor": [10.0, 20.0],
+    "sleep-429": 300
+  },
+  "extractor": {
+    "base-directory": "~/Downloads/gallery-dl",
+    "cookies-from-browser": "firefox",
+    "twitter": {
+      "directory": ["twitter", "{user[name]}"],
+      "filename": "{date:%Y-%m-%d-%H-%M-%S}-{tweet_id}-{num}.{extension}"
+    },
+    "pixiv": {
+      "directory": ["pixiv", "{user[name]}({user[id]})", "{create_date[:10]}_{id}_{title[:40]}"],
+      "filename": "p{num:>03}.{extension}",
+      "metadata": true,
+      "postprocessors": [
+        {
+          "name": "exec",
+          "command": ["python", "/home/wantjoy/Downloads/gallery-dl/pixiv_bookmark.py", "{id}"],
+          "event": "after",
+          "filter": "num == 0"
+        }
+      ]
+    },
+    "fanbox": {
+      "directory": ["fanbox", "{creatorId}", "{date:%Y-%m-%d}_{id}_{title[:40]}"],
+      "filename": "p{num:>03}.{extension}",
+      "metadata": true
+    }
+  }
+}

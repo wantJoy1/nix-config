@@ -1,0 +1,3 @@
+--cookies-from-browser firefox
+--restrict-filenames
+--output %(uploader_id)s/%(upload_date)s_%(id)s_%(title).30B.%(ext)s

@@ -42,9 +42,19 @@
     settings.git_protocol = "https";
   };
 
+  programs.yt-dlp = {
+    enable = true;
+    extraConfig = builtins.readFile ./yt-dlp/config;
+  };
+
+  programs.gallery-dl = {
+    enable = true;
+    settings = lib.importJSON ./gallery-dl/config.json;
+  };
+
   programs.nushell = {
     enable = true;
-    extraConfig = "$env.config.show_banner = false";
+    extraConfig = builtins.readFile ./nushell/custom.nu;
     # systemPath is nix-darwin-only; NixOS exports PATH via the session.
     extraEnv = lib.optionalString (osConfig.environment ? systemPath) ''
       $env.PATH = ("${builtins.replaceStrings

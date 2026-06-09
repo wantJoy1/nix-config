@@ -21,7 +21,7 @@
       "postprocessors": [
         {
           "name": "exec",
-          "command": ["python", "/home/wantjoy/Downloads/gallery-dl/pixiv_bookmark.py", "{id}"],
+          "command": ["pixiv-bookmark", "{id}"],
           "event": "after",
           "filter": "num == 0"
         }

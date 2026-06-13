@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 import sys
 import urllib.request
 import urllib.parse
@@ -16,6 +17,7 @@ HASH_SECRET = (
     "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c"
 )
 TOKEN_CACHE = Path.home() / ".cache" / "gallery-dl" / "access_token.json"
+TAG = os.environ.get("PIXIV_BOOKMARK_TAG", "")
 
 HEADERS = {
     "App-OS": "ios",
@@ -88,7 +90,7 @@ def bookmark(illust_id: int) -> dict:
     body = urllib.parse.urlencode({
         "illust_id": str(illust_id),
         "restrict": "private",
-        "tags[]": "",  # "R-18"
+        "tags[]": TAG,
     }).encode()
 
     headers = {

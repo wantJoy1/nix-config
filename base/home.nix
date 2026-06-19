@@ -12,6 +12,7 @@
     eza
     lazygit
     msedit
+    nufmt
     (writers.writePython3Bin "pixiv-bookmark" {
       libraries = [ (python3Packages.toPythonModule gallery-dl) ];
     } (builtins.readFile ./gallery-dl/pixiv_bookmark.py))

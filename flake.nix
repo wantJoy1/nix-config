@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +22,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, nix-darwin, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, plasma-manager, nix-darwin, ... }@inputs:
     let
       userName = "wantjoy";
       specialArgs = { inherit userName; };
@@ -95,6 +99,7 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
           ./base/system.nix
           ./nixos/system.nix
           ./hosts/SurfacePro8/system.nix

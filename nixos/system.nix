@@ -1,10 +1,11 @@
-{ pkgs, userName, ... }:
+{ pkgs, lib, userName, ... }:
 
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # mkDefault so a host can override (e.g. the linux-surface kernel on SurfacePro8).
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   networking.networkmanager.enable = true;
 

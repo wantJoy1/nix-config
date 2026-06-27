@@ -8,8 +8,16 @@
     obsidian
     claude-code
     opencode
+    herdr
     kdePackages.kate
   ];
+
+  # herdr は default_shell 未指定だと $SHELL (=bash) にフォールバックするため、
+  # konsole プロファイルと同様に Nushell を明示する。
+  xdg.configFile."herdr/config.toml".text = ''
+    [terminal]
+    default_shell = "${pkgs.nushell}/bin/nu"
+  '';
 
   programs.firefox = {
     enable = true;

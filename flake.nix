@@ -20,12 +20,16 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr = {
+      url = "github:ogulcancelik/herdr/v0.7.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, plasma-manager, nix-darwin, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, plasma-manager, nix-darwin, herdr, ... }@inputs:
     let
       userName = "wantjoy";
-      specialArgs = { inherit userName; };
+      specialArgs = { inherit userName herdr; };
       homeManagerDefaults = {
         home-manager = {
           useGlobalPkgs = true;

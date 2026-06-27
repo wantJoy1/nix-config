@@ -54,7 +54,9 @@
     isNormalUser = true;
     description = userName;
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.nushell;
   };
+  environment.shells = [ pkgs.nushell ];
 
   i18n.inputMethod = {
     enable = true;

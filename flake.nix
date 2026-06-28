@@ -20,6 +20,10 @@
       url = "github:ogulcancelik/herdr/v0.7.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -29,6 +33,7 @@
       home-manager,
       plasma-manager,
       herdr,
+      git-hooks,
       ...
     }:
     let
@@ -43,23 +48,39 @@
         };
       };
       forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      preCommitCheck =
+        system:
+        git-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixfmt-rfc-style.enable = true;
+            statix.enable = true;
+            deadnix = {
+              enable = true;
+              excludes = [ "hosts/.*/hardware\\.nix$" ];
+            };
+          };
+        };
     in
     {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+
+      checks = forAllSystems (system: {
+        pre-commit = preCommitCheck system;
+      });
 
       devShells = forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          pre-commit = preCommitCheck system;
         in
         {
           default = pkgs.mkShell {
-            packages = [
+            inherit (pre-commit) shellHook;
+            packages = pre-commit.enabledPackages ++ [
               pkgs.deno
               pkgs.web-ext
-              pkgs.nixfmt-rfc-style
-              pkgs.statix
-              pkgs.deadnix
             ];
           };
         }

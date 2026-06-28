@@ -22,6 +22,7 @@
     opencode
     herdr
     kdePackages.kate
+    kdePackages.konsole
   ];
 
   programs.atuin.enable = true;
@@ -56,15 +57,6 @@
     settings.user = {
       name = "wantJoy1";
       email = "wantjoy1@gmail.com";
-    };
-  };
-
-  programs.konsole = {
-    enable = true;
-    defaultProfile = "Nushell";
-    profiles.Nushell = {
-      name = "Nushell";
-      command = "${pkgs.nushell}/bin/nu";
     };
   };
 

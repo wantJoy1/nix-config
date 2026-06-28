@@ -48,6 +48,25 @@
         };
       };
       forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      makeHost =
+        hostName: extraModules:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = extraModules ++ [
+            ./nixos/system.nix
+            ./hosts/${hostName}/system.nix
+            home-manager.nixosModules.home-manager
+            homeManagerDefaults
+            {
+              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.users.${userName}.imports = [
+                ./nixos/home.nix
+                ./hosts/${hostName}/home.nix
+              ];
+            }
+          ];
+        };
       preCommitCheck =
         system:
         git-hooks.lib.${system}.run {
@@ -89,79 +108,11 @@
         }
       );
 
-      nixosConfigurations = {
-        MinibookXN100 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = [
-            ./nixos/system.nix
-            ./hosts/MinibookXN100/system.nix
-            home-manager.nixosModules.home-manager
-            homeManagerDefaults
-            {
-              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-              home-manager.users.${userName}.imports = [
-                ./nixos/home.nix
-                ./hosts/MinibookXN100/home.nix
-              ];
-            }
-          ];
-        };
-
-        HX100G = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = [
-            ./nixos/system.nix
-            ./hosts/HX100G/system.nix
-            home-manager.nixosModules.home-manager
-            homeManagerDefaults
-            {
-              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-              home-manager.users.${userName}.imports = [
-                ./nixos/home.nix
-                ./hosts/HX100G/home.nix
-              ];
-            }
-          ];
-        };
-
-        GPDP3 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = [
-            ./nixos/system.nix
-            ./hosts/GPDP3/system.nix
-            home-manager.nixosModules.home-manager
-            homeManagerDefaults
-            {
-              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-              home-manager.users.${userName}.imports = [
-                ./nixos/home.nix
-                ./hosts/GPDP3/home.nix
-              ];
-            }
-          ];
-        };
-
-        SurfacePro8 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = [
-            nixos-hardware.nixosModules.microsoft-surface-pro-intel
-            ./nixos/system.nix
-            ./hosts/SurfacePro8/system.nix
-            home-manager.nixosModules.home-manager
-            homeManagerDefaults
-            {
-              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-              home-manager.users.${userName}.imports = [
-                ./nixos/home.nix
-                ./hosts/SurfacePro8/home.nix
-              ];
-            }
-          ];
-        };
+      nixosConfigurations = builtins.mapAttrs makeHost {
+        MinibookXN100 = [ ];
+        HX100G = [ ];
+        GPDP3 = [ ];
+        SurfacePro8 = [ nixos-hardware.nixosModules.microsoft-surface-pro-intel ];
       };
     };
 }

@@ -53,7 +53,10 @@
         git-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
-            nixfmt-rfc-style.enable = true;
+            nixfmt-rfc-style = {
+              enable = true;
+              package = nixpkgs.legacyPackages.${system}.nixfmt;
+            };
             statix.enable = true;
             deadnix = {
               enable = true;

@@ -62,7 +62,10 @@
 
   programs.nushell = {
     enable = true;
-    extraConfig = builtins.readFile ./nushell/custom.nu;
+    extraConfig = ''
+      ${builtins.readFile ./nushell/custom.nu}
+      ${builtins.readFile ./nushell/fanbox/fanbox_payments.nu}
+    '';
     shellAliases.rebuild =
       "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
     environmentVariables.EDITOR = "kate";

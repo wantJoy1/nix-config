@@ -1,17 +1,15 @@
 # nix-config
 
-NixOS と macOS（nix-darwin）の個人設定を 1 つの flake で管理。
+NixOS の個人設定を 1 つの flake で管理。
 
 ## 構成
 
 2 軸 layer モデル：
 
-- **scope**（合成順、後ほど具体・前を上書き）：`base/` → `nixos/`・`darwin/` → `hosts/<NAME>/`
-- **concern**：`system.nix`（NixOS / nix-darwin module）／ `home.nix`（home-manager module）
+- **scope**（合成順、後ほど具体・前を上書き）：`base/` → `nixos/` → `hosts/<NAME>/`
+- **concern**：`system.nix`（NixOS module）／ `home.nix`（home-manager module）
 
 合成は `flake.nix` の各ホストブロックで宣言。各 layer dir は必要な concern のファイルだけ持つ。
-
-Mac 側 GUI アプリは `homebrew.casks` で宣言。Homebrew 自体は事前インストールが必要（nix-darwin はパッケージ管理のみ）。
 
 ## Bootstrap (NixOS)
 
@@ -57,88 +55,10 @@ NixOS を最小構成でインストール・ユーザー作成済み、上記 B
    sudo nixos-rebuild switch --flake .#<NAME>
    ```
 
-## Bootstrap (macOS, nix-darwin)
-
-「すべてのコンテンツと設定を消去」した直後の Mac を想定。
-
-### 前提
-
-- セットアップアシスタントで **短い名前を `wantjoy`** にして初回ユーザーを作成済み
-- 管理者権限のあるアカウントでログイン中
-
-### 1. Nix をインストール
-
-公式インストーラを使う: <https://nixos.org/download/>（macOS は multi-user / daemon モード）。完了後、新しいシェルを開く。
-
-### 2. Homebrew をインストール
-
-公式インストーラを使う: <https://brew.sh/>
-
-Apple Silicon の場合 `/opt/homebrew/bin/brew` に入る。`.zprofile` 設定はスキップ（nix-darwin は brew をフルパスで呼ぶし、Nushell ユーザーなので zsh 設定は不要）。
-
-### 3. このリポジトリを clone
-
-```sh
-nix-shell -p git --extra-experimental-features 'nix-command flakes'
-git clone https://github.com/wantJoy1/nix-config ~/Documents/nix-config
-cd ~/Documents/nix-config
-```
-
-### 4. hostname を設定
-
-flake のホストキー（`MBA`）と一致させる。
-
-```sh
-sudo scutil --set LocalHostName MBA
-sudo scutil --set ComputerName MBA
-sudo scutil --set HostName MBA
-```
-
-### 5. nix-darwin をブートストラップ＆設定適用
-
-```sh
-sudo nix run --extra-experimental-features 'nix-command flakes' \
-  nix-darwin/master#darwin-rebuild -- switch --flake .#MBA
-```
-
-**初回 switch でよくあるエラー**: `/etc/bashrc`, `/etc/zshrc`, `/etc/nix/nix.conf` が既存だと弾かれる。出たら以下でリネームしてから再実行：
-
-```sh
-sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
-sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
-sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
-```
-
-### 6. 動作確認
-
-```sh
-which git gh nu claude       # /run/current-system/sw/bin/...
-ls /Applications/Firefox.app /Applications/Claude.app
-```
-
-### 7. 入力ソースと macSKK 辞書
-
-macOS の入力ソース（`com.apple.HIToolbox` の `AppleEnabledInputSources`）は `nix-darwin` で宣言しても TIS 整合チェックで巻き戻されるため、TIS API を直接叩く `keyboardSwitcher` (Homebrew tap で導入済み) 経由で設定する。
-
-```sh
-nu ./hosts/MBA/scripts/configure-input-sources.nu       # Dvorak + macSKK ひらがな を有効化、ABC 削除、macSKK 内部配列も Dvorak
-nu ./hosts/MBA/scripts/install-macskk-dictionaries.nu   # SKK 辞書を macSKK の辞書ディレクトリに配置
-```
-
-辞書配置後は macSKK 設定画面の「辞書」で有効化する（macSKK 自体に辞書ダウンロード機能はない）。
-
 ## 日常の運用
-
-NixOS:
 
 ```sh
 sudo nixos-rebuild switch --flake .#MinibookXN100
-```
-
-macOS:
-
-```sh
-sudo darwin-rebuild switch --flake .#MBA
 ```
 
 flake.lock 更新:

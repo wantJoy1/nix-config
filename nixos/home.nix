@@ -24,15 +24,24 @@
     kdePackages.kate
   ];
 
+  programs.atuin.enable = true;
+
+  programs.carapace.enable = true;
+
   programs.firefox = {
     enable = true;
     configPath = ".config/mozilla/firefox";
   };
 
-  programs.carapace.enable = true;
-  programs.atuin.enable = true;
-  programs.zoxide.enable = true;
-  programs.starship.enable = true;
+  programs.gallery-dl = {
+    enable = true;
+    settings = lib.importJSON ./gallery-dl/config.json;
+  };
+
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "https";
+  };
 
   programs.git = {
     enable = true;
@@ -50,19 +59,13 @@
     };
   };
 
-  programs.gh = {
+  programs.konsole = {
     enable = true;
-    settings.git_protocol = "https";
-  };
-
-  programs.yt-dlp = {
-    enable = true;
-    extraConfig = builtins.readFile ./yt-dlp/config;
-  };
-
-  programs.gallery-dl = {
-    enable = true;
-    settings = lib.importJSON ./gallery-dl/config.json;
+    defaultProfile = "Nushell";
+    profiles.Nushell = {
+      name = "Nushell";
+      command = "${pkgs.nushell}/bin/nu";
+    };
   };
 
   programs.nushell = {
@@ -86,12 +89,12 @@
     };
   };
 
-  programs.konsole = {
+  programs.starship.enable = true;
+
+  programs.yt-dlp = {
     enable = true;
-    defaultProfile = "Nushell";
-    profiles.Nushell = {
-      name = "Nushell";
-      command = "${pkgs.nushell}/bin/nu";
-    };
+    extraConfig = builtins.readFile ./yt-dlp/config;
   };
+
+  programs.zoxide.enable = true;
 }

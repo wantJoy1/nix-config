@@ -47,7 +47,6 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          ./base/system.nix
           ./nixos/system.nix
           ./hosts/MinibookXN100/system.nix
           home-manager.nixosModules.home-manager
@@ -55,7 +54,6 @@
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName}.imports = [
-              ./base/home.nix
               ./nixos/home.nix
               ./hosts/MinibookXN100/home.nix
             ];
@@ -67,7 +65,6 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          ./base/system.nix
           ./nixos/system.nix
           ./hosts/HX100G/system.nix
           home-manager.nixosModules.home-manager
@@ -75,7 +72,6 @@
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName}.imports = [
-              ./base/home.nix
               ./nixos/home.nix
               ./hosts/HX100G/home.nix
             ];
@@ -87,7 +83,6 @@
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
-          ./base/system.nix
           ./nixos/system.nix
           ./hosts/GPDP3/system.nix
           home-manager.nixosModules.home-manager
@@ -95,7 +90,6 @@
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName}.imports = [
-              ./base/home.nix
               ./nixos/home.nix
               ./hosts/GPDP3/home.nix
             ];
@@ -108,7 +102,6 @@
         inherit specialArgs;
         modules = [
           nixos-hardware.nixosModules.microsoft-surface-pro-intel
-          ./base/system.nix
           ./nixos/system.nix
           ./hosts/SurfacePro8/system.nix
           home-manager.nixosModules.home-manager
@@ -116,7 +109,6 @@
           {
             home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
             home-manager.users.${userName}.imports = [
-              ./base/home.nix
               ./nixos/home.nix
               ./hosts/SurfacePro8/home.nix
             ];

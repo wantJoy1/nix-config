@@ -1,6 +1,10 @@
-{ pkgs, lib, userName, ... }:
+{ pkgs, lib, userName, herdr, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ herdr.overlays.default ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

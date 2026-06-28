@@ -6,7 +6,7 @@ NixOS の個人設定を 1 つの flake で管理。
 
 2 軸 layer モデル：
 
-- **scope**（合成順、後ほど具体・前を上書き）：`base/` → `nixos/` → `hosts/<NAME>/`
+- **scope**（合成順、後ほど具体・前を上書き）：`nixos/` → `hosts/<NAME>/`
 - **concern**：`system.nix`（NixOS module）／ `home.nix`（home-manager module）
 
 合成は `flake.nix` の各ホストブロックで宣言。各 layer dir は必要な concern のファイルだけ持つ。

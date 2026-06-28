@@ -1,10 +1,22 @@
-{ config, pkgs, osConfig, userName, ... }:
+{ config, lib, pkgs, osConfig, userName, ... }:
 
 {
+  home.username = userName;
   home.homeDirectory = osConfig.users.users.${userName}.home;
+  home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
-    # TODO: 一部はクロスプラットフォームかもしれず base/home.nix へ移せる可能性あり。要整理。
+    fzf
+    ripgrep
+    fd
+    bat
+    eza
+    lazygit
+    msedit
+    nufmt
+    (writers.writePython3Bin "pixiv-bookmark" {
+      libraries = [ (python3Packages.toPythonModule gallery-dl) ];
+    } (builtins.readFile ./gallery-dl/pixiv_bookmark.py))
     obsidian
     claude-code
     opencode
@@ -17,7 +29,45 @@
     configPath = ".config/mozilla/firefox";
   };
 
+  programs.carapace.enable = true;
+  programs.atuin.enable = true;
+  programs.zoxide.enable = true;
+  programs.starship.enable = true;
+
+  programs.git = {
+    enable = true;
+    settings.user = {
+      name = "wantJoy1";
+      email = "wantjoy1@gmail.com";
+    };
+  };
+
+  programs.jujutsu = {
+    enable = true;
+    settings.user = {
+      name = "wantJoy1";
+      email = "wantjoy1@gmail.com";
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "https";
+  };
+
+  programs.yt-dlp = {
+    enable = true;
+    extraConfig = builtins.readFile ./yt-dlp/config;
+  };
+
+  programs.gallery-dl = {
+    enable = true;
+    settings = lib.importJSON ./gallery-dl/config.json;
+  };
+
   programs.nushell = {
+    enable = true;
+    extraConfig = builtins.readFile ./nushell/custom.nu;
     shellAliases.rebuild =
       "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
     environmentVariables.EDITOR = "kate";

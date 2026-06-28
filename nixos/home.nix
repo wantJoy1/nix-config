@@ -8,94 +8,98 @@
 }:
 
 {
-  home.username = userName;
-  home.homeDirectory = osConfig.users.users.${userName}.home;
-  home.stateVersion = "25.11";
+  home = {
+    username = userName;
+    homeDirectory = osConfig.users.users.${userName}.home;
+    stateVersion = "25.11";
 
-  home.packages = with pkgs; [
-    fzf
-    ripgrep
-    fd
-    bat
-    eza
-    lazygit
-    msedit
-    nufmt
-    (writers.writePython3Bin "pixiv-bookmark" {
-      libraries = [ (python3Packages.toPythonModule gallery-dl) ];
-    } (builtins.readFile ./gallery-dl/pixiv_bookmark.py))
-    obsidian
-    claude-code
-    opencode
-    herdr
-    kdePackages.kate
-    kdePackages.konsole
-  ];
-
-  programs.atuin.enable = true;
-
-  programs.carapace.enable = true;
-
-  programs.firefox = {
-    enable = true;
-    configPath = ".config/mozilla/firefox";
+    packages = with pkgs; [
+      fzf
+      ripgrep
+      fd
+      bat
+      eza
+      lazygit
+      msedit
+      nufmt
+      (writers.writePython3Bin "pixiv-bookmark" {
+        libraries = [ (python3Packages.toPythonModule gallery-dl) ];
+      } (builtins.readFile ./gallery-dl/pixiv_bookmark.py))
+      obsidian
+      claude-code
+      opencode
+      herdr
+      kdePackages.kate
+      kdePackages.konsole
+    ];
   };
 
-  programs.gallery-dl = {
-    enable = true;
-    settings = lib.importJSON ./gallery-dl/config.json;
-  };
+  programs = {
+    atuin.enable = true;
 
-  programs.gh = {
-    enable = true;
-    settings.git_protocol = "https";
-  };
+    carapace.enable = true;
 
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "wantJoy1";
-      email = "wantjoy1@gmail.com";
+    firefox = {
+      enable = true;
+      configPath = ".config/mozilla/firefox";
     };
-  };
 
-  programs.jujutsu = {
-    enable = true;
-    settings.user = {
-      name = "wantJoy1";
-      email = "wantjoy1@gmail.com";
+    gallery-dl = {
+      enable = true;
+      settings = lib.importJSON ./gallery-dl/config.json;
     };
-  };
 
-  programs.nushell = {
-    enable = true;
-    extraConfig = ''
-      ${builtins.readFile ./nushell/custom.nu}
-      ${builtins.readFile ./nushell/fanbox/fanbox_payments.nu}
-    '';
-    shellAliases.rebuild = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
-    environmentVariables.EDITOR = "kate";
-  };
-
-  programs.plasma = {
-    enable = true;
-    workspace.lookAndFeel = "org.kde.breezedark.desktop";
-    configFile.kxkbrc.Layout = {
-      Options = "ctrl:nocaps";
-      ResetOldOptions = true;
+    gh = {
+      enable = true;
+      settings.git_protocol = "https";
     };
-    configFile.kwinrc.Wayland.InputMethod = {
-      value = "/run/current-system/sw/share/applications/fcitx5-wayland-launcher.desktop";
-      immutable = true;
+
+    git = {
+      enable = true;
+      settings.user = {
+        name = "wantJoy1";
+        email = "wantjoy1@gmail.com";
+      };
     };
+
+    jujutsu = {
+      enable = true;
+      settings.user = {
+        name = "wantJoy1";
+        email = "wantjoy1@gmail.com";
+      };
+    };
+
+    nushell = {
+      enable = true;
+      extraConfig = ''
+        ${builtins.readFile ./nushell/custom.nu}
+        ${builtins.readFile ./nushell/fanbox/fanbox_payments.nu}
+      '';
+      shellAliases.rebuild = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
+      environmentVariables.EDITOR = "kate";
+    };
+
+    plasma = {
+      enable = true;
+      workspace.lookAndFeel = "org.kde.breezedark.desktop";
+      configFile.kxkbrc.Layout = {
+        Options = "ctrl:nocaps";
+        ResetOldOptions = true;
+      };
+      configFile.kwinrc.Wayland.InputMethod = {
+        value = "/run/current-system/sw/share/applications/fcitx5-wayland-launcher.desktop";
+        immutable = true;
+      };
+    };
+
+    starship.enable = true;
+
+    yt-dlp = {
+      enable = true;
+      extraConfig = builtins.readFile ./yt-dlp/config;
+    };
+
+    zoxide.enable = true;
   };
-
-  programs.starship.enable = true;
-
-  programs.yt-dlp = {
-    enable = true;
-    extraConfig = builtins.readFile ./yt-dlp/config;
-  };
-
-  programs.zoxide.enable = true;
 }

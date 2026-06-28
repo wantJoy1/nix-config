@@ -24,14 +24,13 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       nixos-hardware,
       home-manager,
       plasma-manager,
       herdr,
       ...
-    }@inputs:
+    }:
     let
       userName = "wantjoy";
       specialArgs = { inherit userName herdr; };
@@ -66,77 +65,79 @@
         }
       );
 
-      nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          ./nixos/system.nix
-          ./hosts/MinibookXN100/system.nix
-          home-manager.nixosModules.home-manager
-          homeManagerDefaults
-          {
-            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-            home-manager.users.${userName}.imports = [
-              ./nixos/home.nix
-              ./hosts/MinibookXN100/home.nix
-            ];
-          }
-        ];
-      };
+      nixosConfigurations = {
+        MinibookXN100 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./nixos/system.nix
+            ./hosts/MinibookXN100/system.nix
+            home-manager.nixosModules.home-manager
+            homeManagerDefaults
+            {
+              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.users.${userName}.imports = [
+                ./nixos/home.nix
+                ./hosts/MinibookXN100/home.nix
+              ];
+            }
+          ];
+        };
 
-      nixosConfigurations.HX100G = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          ./nixos/system.nix
-          ./hosts/HX100G/system.nix
-          home-manager.nixosModules.home-manager
-          homeManagerDefaults
-          {
-            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-            home-manager.users.${userName}.imports = [
-              ./nixos/home.nix
-              ./hosts/HX100G/home.nix
-            ];
-          }
-        ];
-      };
+        HX100G = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./nixos/system.nix
+            ./hosts/HX100G/system.nix
+            home-manager.nixosModules.home-manager
+            homeManagerDefaults
+            {
+              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.users.${userName}.imports = [
+                ./nixos/home.nix
+                ./hosts/HX100G/home.nix
+              ];
+            }
+          ];
+        };
 
-      nixosConfigurations.GPDP3 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          ./nixos/system.nix
-          ./hosts/GPDP3/system.nix
-          home-manager.nixosModules.home-manager
-          homeManagerDefaults
-          {
-            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-            home-manager.users.${userName}.imports = [
-              ./nixos/home.nix
-              ./hosts/GPDP3/home.nix
-            ];
-          }
-        ];
-      };
+        GPDP3 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./nixos/system.nix
+            ./hosts/GPDP3/system.nix
+            home-manager.nixosModules.home-manager
+            homeManagerDefaults
+            {
+              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.users.${userName}.imports = [
+                ./nixos/home.nix
+                ./hosts/GPDP3/home.nix
+              ];
+            }
+          ];
+        };
 
-      nixosConfigurations.SurfacePro8 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          nixos-hardware.nixosModules.microsoft-surface-pro-intel
-          ./nixos/system.nix
-          ./hosts/SurfacePro8/system.nix
-          home-manager.nixosModules.home-manager
-          homeManagerDefaults
-          {
-            home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
-            home-manager.users.${userName}.imports = [
-              ./nixos/home.nix
-              ./hosts/SurfacePro8/home.nix
-            ];
-          }
-        ];
+        SurfacePro8 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            nixos-hardware.nixosModules.microsoft-surface-pro-intel
+            ./nixos/system.nix
+            ./hosts/SurfacePro8/system.nix
+            home-manager.nixosModules.home-manager
+            homeManagerDefaults
+            {
+              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.users.${userName}.imports = [
+                ./nixos/home.nix
+                ./hosts/SurfacePro8/home.nix
+              ];
+            }
+          ];
+        };
       };
     };
 }

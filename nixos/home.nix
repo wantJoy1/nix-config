@@ -1,4 +1,11 @@
-{ config, lib, pkgs, osConfig, userName, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  userName,
+  ...
+}:
 
 {
   home.username = userName;
@@ -66,8 +73,7 @@
       ${builtins.readFile ./nushell/custom.nu}
       ${builtins.readFile ./nushell/fanbox/fanbox_payments.nu}
     '';
-    shellAliases.rebuild =
-      "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
+    shellAliases.rebuild = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
     environmentVariables.EDITOR = "kate";
   };
 

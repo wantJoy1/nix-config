@@ -22,7 +22,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, plasma-manager, herdr, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixos-hardware,
+      home-manager,
+      plasma-manager,
+      herdr,
+      ...
+    }@inputs:
     let
       userName = "wantjoy";
       specialArgs = { inherit userName herdr; };
@@ -35,16 +44,27 @@
         };
       };
       forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
-    in {
+    in
+    {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in {
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
           default = pkgs.mkShell {
-            packages = [ pkgs.deno pkgs.web-ext pkgs.nixfmt-rfc-style pkgs.statix pkgs.deadnix ];
+            packages = [
+              pkgs.deno
+              pkgs.web-ext
+              pkgs.nixfmt-rfc-style
+              pkgs.statix
+              pkgs.deadnix
+            ];
           };
-        });
+        }
+      );
 
       nixosConfigurations.MinibookXN100 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

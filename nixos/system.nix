@@ -1,9 +1,18 @@
-{ pkgs, lib, userName, herdr, ... }:
+{
+  pkgs,
+  lib,
+  userName,
+  herdr,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ herdr.overlays.default ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -57,7 +66,10 @@
   users.users.${userName} = {
     isNormalUser = true;
     description = userName;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.nushell;
   };
   environment.shells = [ pkgs.nushell ];
@@ -65,7 +77,10 @@
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = with pkgs; [ fcitx5-mozc fcitx5-skk ];
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-skk
+    ];
     fcitx5.waylandFrontend = true;
     fcitx5.settings.addons.skk.globalSection.InitialInputMode = "Latin";
   };

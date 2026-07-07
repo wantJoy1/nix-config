@@ -26,6 +26,7 @@
         libraries = [ (python3Packages.toPythonModule gallery-dl) ];
       } (builtins.readFile ./gallery-dl/pixiv_bookmark.py))
       obsidian
+      google-chrome
       claude-code
       opencode
       herdr

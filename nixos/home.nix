@@ -20,7 +20,6 @@
       bat
       eza
       lazygit
-      msedit
       nufmt
       (writers.writePython3Bin "pixiv-bookmark" {
         libraries = [ (python3Packages.toPythonModule gallery-dl) ];
@@ -63,6 +62,8 @@
       };
     };
 
+    helix.enable = true;
+
     jujutsu = {
       enable = true;
       settings.user = {
@@ -78,7 +79,7 @@
         ${builtins.readFile ./nushell/fanbox/fanbox_payments.nu}
       '';
       shellAliases.rebuild = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
-      environmentVariables.EDITOR = "kate";
+      environmentVariables.EDITOR = "hx";
     };
 
     plasma = {

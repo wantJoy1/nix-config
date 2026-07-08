@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "gallery-dl context menu",
+  "version": "0.1.0",
+  "description": "Run gallery-dl on the page / link / image URL via right-click.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gallery-dl-context@wantjoy1.github.io",
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": ["contextMenus", "nativeMessaging", "notifications"]
+}

@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "test": "deno test",
+    "bundle": "deno bundle --format iife --platform browser background.ts -o background.js",
+    "check": "deno check background.ts background.test.ts"
+  }
+}

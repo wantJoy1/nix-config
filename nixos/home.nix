@@ -8,6 +8,8 @@
 }:
 
 {
+  imports = [ ./firefox-gallery-dl ];
+
   home = {
     username = userName;
     homeDirectory = osConfig.users.users.${userName}.home;

@@ -62,7 +62,10 @@
       };
     };
 
-    helix.enable = true;
+    helix = {
+      enable = true;
+      settings.theme = "base16_transparent";
+    };
 
     jujutsu = {
       enable = true;

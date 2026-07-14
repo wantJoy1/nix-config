@@ -5,7 +5,6 @@ Deno.test("pickUrl routes each context to its URL field", () => {
   const cases = [
     [{ menuItemId: "gallery-dl-page", pageUrl: "https://e/p" }, "https://e/p"],
     [{ menuItemId: "gallery-dl-link", linkUrl: "https://e/l" }, "https://e/l"],
-    [{ menuItemId: "gallery-dl-image", srcUrl: "https://e/i.jpg" }, "https://e/i.jpg"],
   ] as const;
   for (const [info, expected] of cases) assertEquals(pickUrl(info), expected);
 });

@@ -15,13 +15,12 @@ export const MENU_ITEMS: {
 }[] = [
   { id: "gallery-dl-page", title: "gallery-dl: このページ", contexts: ["page"] },
   { id: "gallery-dl-link", title: "gallery-dl: このリンク", contexts: ["link"] },
-  { id: "gallery-dl-image", title: "gallery-dl: この画像", contexts: ["image"] },
   { id: "gallery-dl-selection", title: "gallery-dl: 選択中のURL", contexts: ["selection"] },
 ];
 
 type ClickInfo = Pick<
   browser.contextMenus.OnClickData,
-  "menuItemId" | "pageUrl" | "linkUrl" | "srcUrl" | "selectionText"
+  "menuItemId" | "pageUrl" | "linkUrl" | "selectionText"
 >;
 
 export function pickUrl(info: ClickInfo): string | null {
@@ -30,8 +29,6 @@ export function pickUrl(info: ClickInfo): string | null {
       return info.pageUrl ?? null;
     case "gallery-dl-link":
       return info.linkUrl ?? null;
-    case "gallery-dl-image":
-      return info.srcUrl ?? null;
     case "gallery-dl-selection": {
       const selected = (info.selectionText ?? "").trim();
       return selected.length > 0 ? selected : null;

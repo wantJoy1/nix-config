@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "gallery-dl context menu",
-  "version": "0.1.0",
-  "description": "Run gallery-dl on the page / link / image URL via right-click.",
+  "version": "0.2.0",
+  "description": "Run gallery-dl on the page / link / selection URL via right-click.",
   "browser_specific_settings": {
     "gecko": {
       "id": "gallery-dl-context@wantjoy1.github.io",

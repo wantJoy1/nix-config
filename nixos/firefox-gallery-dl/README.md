@@ -1,6 +1,6 @@
 # firefox-gallery-dl
 
-Firefox の右クリック (ページ / リンク / 画像 / 選択テキスト) の URL に対し、
+Firefox の右クリック (ページ / リンク / 選択テキスト) の URL に対し、
 native messaging 経由でホストの `gallery-dl` を実行する WebExtension。
 
 ## アーキテクチャ

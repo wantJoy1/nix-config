@@ -33,6 +33,7 @@
       herdr
       kdePackages.kate
       kdePackages.konsole
+      vlc
     ];
   };
 

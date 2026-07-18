@@ -84,6 +84,8 @@
     };
   };
 
+  programs.kdeconnect.enable = true;
+
   security.rtkit.enable = true;
 
   hardware.bluetooth = {

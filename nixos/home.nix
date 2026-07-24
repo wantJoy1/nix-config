@@ -29,7 +29,6 @@
       obsidian
       google-chrome
       claude-code
-      opencode
       herdr
       kdePackages.kate
       kdePackages.konsole
@@ -86,6 +85,11 @@
       '';
       shellAliases.rebuild = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/Documents/nix-config#${osConfig.networking.hostName}";
       environmentVariables.EDITOR = "hx";
+    };
+
+    opencode = {
+      enable = true;
+      settings.shell = lib.getExe config.programs.nushell.package;
     };
 
     plasma = {

@@ -84,7 +84,14 @@
     };
   };
 
-  programs.kdeconnect.enable = true;
+  programs = {
+    kdeconnect.enable = true;
+    steam = {
+      enable = true;
+      extraCompatPackages = [ pkgs.proton-ge-bin ];
+      fontPackages = [ pkgs.noto-fonts-cjk-sans ];
+    };
+  };
 
   security.rtkit.enable = true;
 

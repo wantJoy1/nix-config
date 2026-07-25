@@ -104,10 +104,29 @@
   };
   environment.shells = [ pkgs.nushell ];
 
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    noto-fonts-color-emoji
-  ];
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      udev-gothic-nf
+    ];
+    fontconfig.defaultFonts = {
+      serif = [
+        "Noto Serif CJK JP"
+        "Noto Serif"
+      ];
+      sansSerif = [
+        "Noto Sans CJK JP"
+        "Noto Sans"
+      ];
+      monospace = [
+        "UDEV Gothic NF"
+        "Noto Sans Mono CJK JP"
+        "Noto Sans Mono"
+      ];
+      emoji = [ "Noto Color Emoji" ];
+    };
+  };
 }

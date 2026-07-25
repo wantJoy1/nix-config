@@ -94,6 +94,32 @@
 
     plasma = {
       enable = true;
+      fonts = {
+        fixedWidth = {
+          family = "UDEV Gothic NF";
+          pointSize = 10;
+        };
+        general = {
+          family = "Noto Sans CJK JP";
+          pointSize = 10;
+        };
+        menu = {
+          family = "Noto Sans CJK JP";
+          pointSize = 10;
+        };
+        small = {
+          family = "Noto Sans CJK JP";
+          pointSize = 8;
+        };
+        toolbar = {
+          family = "Noto Sans CJK JP";
+          pointSize = 10;
+        };
+        windowTitle = {
+          family = "Noto Sans CJK JP";
+          pointSize = 10;
+        };
+      };
       workspace.lookAndFeel = "org.kde.breezedark.desktop";
       configFile.kxkbrc.Layout = {
         Options = "ctrl:nocaps";

@@ -1,6 +1,8 @@
-_:
+{ pkgs, ... }:
 
 {
+  home.packages = [ pkgs.prismlauncher ];
+
   xdg.configFile."fcitx5/profile".text = ''
     [Groups/0]
     Name=デフォルト

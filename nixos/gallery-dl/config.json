@@ -35,6 +35,10 @@
     "skeb": {
       "directory": ["skeb", "{creator[screen_name]}", "{post_num:>03}"],
       "filename": "p{num:>03}.{extension}"
+    },
+    "xfolio": {
+      "directory": ["xfolio", "{creator_slug}", "{work_id}_{title[:40]}"],
+      "filename": "p{num:>03}.{extension}"
     }
   }
 }

@@ -10,9 +10,10 @@
     "base-directory": "~/Downloads/gallery-dl",
     "archive": "~/Downloads/gallery-dl/archive.txt",
     "cookies": ["firefox"],
-    "twitter": {
-      "directory": ["twitter", "{user[name]}"],
-      "filename": "{date:%Y-%m-%d-%H-%M-%S}-{tweet_id}-{num}.{extension}"
+    "fanbox": {
+      "directory": ["fanbox", "{creatorId}", "{date:%Y-%m-%d}_{id}_{title[:40]}"],
+      "filename": "p{num:>03}.{extension}",
+      "metadata": true
     },
     "pixiv": {
       "directory": ["pixiv", "{user[name]}({user[id]})", "{create_date[:10]}_{id}_{title[:40]}"],
@@ -27,14 +28,13 @@
         }
       ]
     },
-    "fanbox": {
-      "directory": ["fanbox", "{creatorId}", "{date:%Y-%m-%d}_{id}_{title[:40]}"],
-      "filename": "p{num:>03}.{extension}",
-      "metadata": true
-    },
     "skeb": {
       "directory": ["skeb", "{creator[screen_name]}", "{post_num:>03}"],
       "filename": "p{num:>03}.{extension}"
+    },
+    "twitter": {
+      "directory": ["twitter", "{user[name]}"],
+      "filename": "{date:%Y-%m-%d-%H-%M-%S}-{tweet_id}-{num}.{extension}"
     },
     "xfolio": {
       "directory": ["xfolio", "{creator_slug}", "{work_id}_{title[:40]}"],

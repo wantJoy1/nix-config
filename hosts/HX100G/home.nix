@@ -17,6 +17,11 @@
     0=デフォルト
   '';
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = [ pkgs.obs-studio-plugins.obs-pipewire-audio-capture ];
+  };
+
   # s2idle is broken on this machine: amdgpu's SMU IP block fails to
   # resume (`resume of IP block <smu> failed -62`), the GPU wedges, and
   # even ssh-initiated reboot fails afterwards. BIOS 0.18 (2023-09-25)

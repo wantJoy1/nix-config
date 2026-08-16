@@ -95,9 +95,12 @@
 
   security.rtkit.enable = true;
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    keyboard.qmk.enable = true;
   };
 
   users.users.${userName} = {

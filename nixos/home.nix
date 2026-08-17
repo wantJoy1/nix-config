@@ -58,9 +58,12 @@
 
     git = {
       enable = true;
-      settings.user = {
-        name = "wantJoy1";
-        email = "wantjoy1@gmail.com";
+      settings = {
+        init.defaultBranch = "main";
+        user = {
+          name = "wantJoy1";
+          email = "wantjoy1@gmail.com";
+        };
       };
     };
 

@@ -33,6 +33,7 @@
       kdePackages.kate
       kdePackages.konsole
       vlc
+      stockfish
     ];
   };
 

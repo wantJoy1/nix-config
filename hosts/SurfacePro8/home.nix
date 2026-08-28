@@ -29,4 +29,6 @@ in
     [GroupOrder]
     0=デフォルト
   '';
+
+  programs.plasma.powerdevil.AC.autoSuspend.action = "nothing";
 }

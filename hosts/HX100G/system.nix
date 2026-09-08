@@ -1,9 +1,17 @@
-{ ... }:
+{ userName, ... }:
 
 {
   imports = [ ./hardware.nix ];
 
   networking.hostName = "HX100G";
+
+  # MakeMKV enumerates optical drives through /sys/bus/scsi/devices/*/scsi_generic,
+  # which only exists once sg is loaded.
+  boot.kernelModules = [ "sg" ];
+
+  # A local seat session already gets /dev/sr0 and /dev/sg* via uaccess ACLs;
+  # the group is what makes ripping work over ssh too.
+  users.users.${userName}.extraGroups = [ "cdrom" ];
 
   # Tailscale SSH intercepts tailnet port 22, so distributed builds can't use
   # openssh key auth there. Expose a second port that reaches openssh directly.

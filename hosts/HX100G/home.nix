@@ -1,7 +1,11 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.prismlauncher ];
+  home.packages = with pkgs; [
+    makemkv
+    mkvtoolnix
+    prismlauncher
+  ];
 
   xdg.configFile."fcitx5/profile".text = ''
     [Groups/0]

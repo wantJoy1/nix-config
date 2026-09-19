@@ -56,6 +56,10 @@
     ];
   };
 
+  boot.extraModprobeConfig = ''
+    softdep soc_button_array pre: pinctrl_tigerlake
+  '';
+
   # Pin to the release of the initial install; do not change post-install.
   system.stateVersion = "25.11";
 }

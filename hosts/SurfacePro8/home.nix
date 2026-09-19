@@ -30,5 +30,12 @@ in
     0=デフォルト
   '';
 
-  programs.plasma.powerdevil.AC.autoSuspend.action = "nothing";
+  programs.plasma.powerdevil = {
+    AC = {
+      autoSuspend.action = "nothing";
+      powerButtonAction = "lockScreen";
+    };
+    battery.powerButtonAction = "lockScreen";
+    lowBattery.powerButtonAction = "lockScreen";
+  };
 }

@@ -36,6 +36,7 @@
     Host hx100g-1
       Port 2201
       StrictHostKeyChecking accept-new
+      ConnectTimeout 5
   '';
 
   # Cameras via the libcamera softISP path, not `hardware.ipu6`: Intel's

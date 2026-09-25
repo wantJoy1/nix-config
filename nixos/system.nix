@@ -93,6 +93,8 @@
     };
   };
 
+  virtualisation.waydroid.enable = true;
+
   security.rtkit.enable = true;
 
   hardware = {

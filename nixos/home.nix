@@ -8,7 +8,10 @@
 }:
 
 {
-  imports = [ ./firefox-gallery-dl ];
+  imports = [
+    ./dlsite
+    ./firefox-gallery-dl
+  ];
 
   home = {
     username = userName;
@@ -144,4 +147,25 @@
 
     zoxide.enable = true;
   };
+
+  xdg.mimeApps =
+    let
+      firefox = "firefox.desktop";
+    in
+    {
+      enable = true;
+      defaultApplications = {
+        "application/x-extension-htm" = firefox;
+        "application/x-extension-html" = firefox;
+        "application/x-extension-shtml" = firefox;
+        "application/x-extension-xht" = firefox;
+        "application/x-extension-xhtml" = firefox;
+        "application/xhtml+xml" = firefox;
+        "text/html" = firefox;
+        "x-scheme-handler/chrome" = firefox;
+        "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
+        "x-scheme-handler/http" = firefox;
+        "x-scheme-handler/https" = firefox;
+      };
+    };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware.nix ];
@@ -56,6 +56,16 @@
       }
     ];
   };
+
+  services.pipewire.wireplumber.package = pkgs.wireplumber.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [
+      (pkgs.fetchpatch {
+        name = "v4l2-advance-transition-if-device-disabled.patch";
+        url = "https://github.com/PipeWire/wireplumber/commit/65519a1ff7cecebc0622fc4a2badec830ee67d7d.patch";
+        hash = "sha256-ERbiiCGOBm0GsBISBbnvVXs/urbHyMSiFnLJUF62UD8=";
+      })
+    ];
+  });
 
   boot.extraModprobeConfig = ''
     softdep soc_button_array pre: pinctrl_tigerlake

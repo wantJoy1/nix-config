@@ -72,7 +72,7 @@
         git-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
-            nixfmt-rfc-style = {
+            nixfmt = {
               enable = true;
               package = nixpkgs.legacyPackages.${system}.nixfmt;
             };

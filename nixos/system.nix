@@ -35,6 +35,19 @@
 
   networking.networkmanager.enable = true;
 
+  # eno1 と wlp6s0 が同一セグメント (192.168.0.0/24) に居るため、Linux の弱い
+  # ホストモデルのままだと ARP flux が起きる。wlp6s0 の IP に対しても eno1 側で
+  # ARP 応答してしまい、ルータが「その IP は有線ポートの先」と学習して無線宛の
+  # IPv4 をケーブル側へ送ってしまう (結果、無線だけだと IPv4 が通らない)。
+  # ARP 応答は受信インターフェース上の自分のアドレスに限定し、送信元アドレスは
+  # 送信インターフェースのものを使うようにする。
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.arp_ignore" = 1;
+    "net.ipv4.conf.all.arp_announce" = 2;
+    "net.ipv4.conf.default.arp_ignore" = 1;
+    "net.ipv4.conf.default.arp_announce" = 2;
+  };
+
   time.timeZone = "Asia/Tokyo";
 
   i18n = {

@@ -33,6 +33,8 @@
       obsidian
       google-chrome
       claude-code
+      opencode-desktop
+      goose-desktop
       herdr
       kdePackages.kate
       kdePackages.konsole

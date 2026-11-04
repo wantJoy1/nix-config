@@ -48,6 +48,8 @@
 
     carapace.enable = true;
 
+    direnv.enable = true;
+
     firefox = {
       enable = true;
       configPath = ".config/mozilla/firefox";

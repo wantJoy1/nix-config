@@ -103,6 +103,7 @@
             packages = pre-commit.enabledPackages ++ [
               pkgs.deno
               pkgs.web-ext
+              pkgs.git
             ];
           };
         }

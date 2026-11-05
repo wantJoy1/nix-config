@@ -1,7 +1,9 @@
-{ userName, ... }:
+{ pkgs, userName, ... }:
 
 {
   imports = [ ./hardware.nix ];
+
+  hardware.firmware = [ (pkgs.callPackage ../../pkgs/mt7927-bt-firmware { }) ];
 
   networking.hostName = "HX100G";
 

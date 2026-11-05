@@ -4,6 +4,7 @@
   imports = [ ./hardware.nix ];
 
   hardware.firmware = [ (pkgs.callPackage ../../pkgs/mt7927-bt-firmware { }) ];
+  boot.kernelParams = [ "cfg80211.ieee80211_regdom=JP" ];
 
   networking.hostName = "HX100G";
 

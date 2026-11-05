@@ -1,5 +1,9 @@
 # HX100G の Wi-Fi
 
+## 6GHz
+
+`cfg80211.ieee80211_regdom=JP` を指定している。未指定だと切断時に規制ドメインが `WORLD` (`00`) に戻って 6GHz が無効になり、6GHz の AP へ切り替えられない (`association took too long`)。
+
 ## 2.4GHz は Bluetooth と併用できない (MT7921 時代の記録)
 
 > MT7921 での記録。MT7927 では同じ低下は出ていない (2026-11-05、BLE マウス操作中の 2.4GHz で 99〜119 Mbit/s、RTT 平均 6.3ms)。

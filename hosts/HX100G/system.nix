@@ -24,6 +24,10 @@
       22
       2201
     ];
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 
   # Accept the SurfacePro8 nix-daemon (root) builder key for remote builds.

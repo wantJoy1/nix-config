@@ -24,6 +24,7 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
   outputs =
@@ -34,6 +35,7 @@
       plasma-manager,
       herdr,
       git-hooks,
+      hermes-agent,
       ...
     }:
     let
@@ -111,7 +113,7 @@
 
       nixosConfigurations = builtins.mapAttrs makeHost {
         MinibookXN100 = [ ];
-        HX100G = [ ];
+        HX100G = [ hermes-agent.nixosModules.default ];
         GPDP3 = [ ];
         SurfacePro8 = [ nixos-hardware.nixosModules.microsoft-surface-pro-intel ];
       };

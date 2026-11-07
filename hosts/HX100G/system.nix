@@ -13,8 +13,31 @@
   boot.kernelModules = [ "sg" ];
 
   # A local seat session already gets /dev/sr0 and /dev/sg* via uaccess ACLs;
-  # the group is what makes ripping work over ssh too.
-  users.users.${userName}.extraGroups = [ "cdrom" ];
+  # the cdrom group is what makes ripping work over ssh too.
+  users.users.${userName}.extraGroups = [
+    "cdrom"
+    "hermes"
+  ];
+
+  services.hermes-agent = {
+    enable = true;
+    addToSystemPackages = true;
+    environmentFiles = [ "/etc/hermes/env" ];
+    settings = {
+      model = {
+        provider = "anthropic";
+        default = "claude-opus-5-5";
+      };
+      agent.max_turns = 60;
+      auth.adopt_external_logins = false;
+      memory.write_approval = true;
+      skills.write_approval = true;
+      stt = {
+        language = "ja";
+        local.model = "small";
+      };
+    };
+  };
 
   # Tailscale SSH intercepts tailnet port 22, so distributed builds can't use
   # openssh key auth there. Expose a second port that reaches openssh directly.

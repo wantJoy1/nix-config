@@ -40,6 +40,7 @@
       kdePackages.konsole
       vlc
       stockfish
+      androidenv.androidPkgs.platform-tools
     ];
   };
 

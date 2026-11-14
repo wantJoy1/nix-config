@@ -86,6 +86,10 @@
       variant = "";
     };
     printing.enable = true;
+    smartd = {
+      enable = true;
+      notifications.systembus-notify.enable = true;
+    };
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -127,7 +131,10 @@
     ];
     shell = pkgs.nushell;
   };
-  environment.shells = [ pkgs.nushell ];
+  environment = {
+    shells = [ pkgs.nushell ];
+    systemPackages = [ pkgs.smartmontools ];
+  };
 
   fonts = {
     packages = with pkgs; [

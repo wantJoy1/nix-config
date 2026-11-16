@@ -35,6 +35,7 @@
       claude-code
       opencode-desktop
       goose-desktop
+      antigravity-hub
       herdr
       kdePackages.kate
       kdePackages.konsole

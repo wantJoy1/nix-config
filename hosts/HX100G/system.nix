@@ -23,6 +23,7 @@
     enable = true;
     addToSystemPackages = true;
     environmentFiles = [ "/etc/hermes/env" ];
+    extraPackages = [ pkgs.binutils ];
     settings = {
       model = {
         provider = "anthropic";
@@ -36,8 +37,13 @@
         language = "ja";
         local.model = "small";
       };
+      tts = {
+        edge.voice = "ja-JP-NanamiNeural";
+        streaming.min_len = 6;
+      };
     };
   };
+  systemd.services.hermes-agent.environment.LD_LIBRARY_PATH = "${pkgs.libopus}/lib";
 
   # Tailscale SSH intercepts tailnet port 22, so distributed builds can't use
   # openssh key auth there. Expose a second port that reaches openssh directly.
